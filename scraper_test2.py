@@ -26,9 +26,10 @@ for i in range(0, 10):
 #print(articles)
 index = 0
 for article in articles:
-    print(str(index) + " - " + str(article))
+    #print(str(index) + " - " + str(article['title']) + " - " + str(article['url']))
+    print(str(index) + " - " + str(article['title']))
     index += 1
 
-#totalTime = time.clock() - startTime
+totalTime = time.clock() - startTime
 
-#print("Total scrape time: " + str(totalTime))
+print("Total scrape time: " + str(totalTime))
