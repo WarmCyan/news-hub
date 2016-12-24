@@ -27,7 +27,7 @@ for i in range(0, 10):
 index = 0
 for article in articles:
     #print(str(index) + " - " + str(article['title']) + " - " + str(article['url']))
-    print(str(index) + " - " + str(article['title']))
+    print(str(index) + " - " + str(article['title']).encode(sys.stdout.encoding, errors='replace'))
     index += 1
 
 totalTime = time.clock() - startTime
