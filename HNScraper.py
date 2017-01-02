@@ -27,13 +27,10 @@ def log(msg):
 
 # make sure encoding isn't monkey business
 def safe(obj):
-    #return str(obj).encode(sys.stdout.encoding, errors='replace').decode('utf-8')
-    try:
-        obj = str(obj)
-    except:
-        obj = obj.encode(sys.stdout.encoding, errors="replace").decode('utf-8')
+    try: obj = str(obj) # convert to string first if necessary
+    except: pass
+    obj = obj.encode(sys.stdout.encoding, errors="replace").decode("utf-8")
     return obj
-
 
 def loadSaved():
     global dataFileName
@@ -108,7 +105,7 @@ def retrieveArticleData():
     
     index = 0
     for articleID in articleIDList:
-        if (index > 10): break # DEBUG
+        #if (index > 10): break # DEBUG
         
         # skip this one if we've already done it
         if articleID in saved:
