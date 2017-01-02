@@ -29,7 +29,8 @@ def log(msg):
 def safe(obj):
     try: obj = str(obj) # convert to string first if necessary
     except: pass
-    obj = obj.encode(sys.stdout.encoding, errors="replace").decode("utf-8")
+    #obj = obj.encode(sys.stdout.encoding, errors="replace").decode("utf-8")
+    obj = str(obj.encode(sys.stdout.encoding, errors="replace").decode("ascii"))
     return obj
 
 def loadSaved():
