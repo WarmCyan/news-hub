@@ -50,7 +50,7 @@ def loadSaved():
         log("\nNo temp or save files found for this data set, creating new...\n")
         pass
 
-def saveDataset(temp=False, point=0):
+def saveDataset(temp=False):
     global articleData
     global dataFileName
     global saved
