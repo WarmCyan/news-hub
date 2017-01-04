@@ -1,8 +1,11 @@
 from newshub.utils import Utils
+from newshub.hn_scraper import HNScraper
 
 class Hub:
 
     utils = None
+
+    # store a run name here, or have a "makerun" function
     
     def __init__(self, workFolder):
         print("----------------------------------------")
@@ -16,5 +19,6 @@ class Hub:
         except: print("@ WARNING! - deconstructor failed.")
         print("========================================")
 
-    def Test(self):
-        print("Hello there from HubWorld!")
+    def getHNScraper(self):
+        scraper = HNScraper(self.utils)
+        return scraper

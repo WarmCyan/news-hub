@@ -34,8 +34,10 @@ class Utils:
             changed = True
         if changed: print("# Initialized work folders.")
 
+    # NOTE: if a name that's already in use is passed in, this will reset that
+    # name to the current time
     def makeTimePoint(self, name):
-        if name in self.timePoints: return False
+        #if name in self.timePoints: return False
         self.timePoints[name] = time.clock()
         return True
 
@@ -78,6 +80,3 @@ class Utils:
             
             try: self.logs[pointer].close()
             except: print("# ERROR! - Failed to close file pointer '" + self.printify(pointer) + "'")
-    
-    def helloThere(self):
-        print("Hello there!")
