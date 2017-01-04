@@ -1,5 +1,9 @@
 import newshub as nh
 import time
+
+hub = nh.Hub("./test")
+hub.Test()
+
 #from newshub import Hub
 #from newshub.utils import *
 
@@ -7,15 +11,15 @@ import time
 #hub.Test()
 
 #nh.utils.HelloThere()
-utils = nh.Utils()
-utils.makeTimePoint("run")
+#utils = nh.Utils()
+#utils.makeTimePoint("run")
 
-utils.helloThere()
+#utils.helloThere()
 
-utils.log("run", "Attempting to sleep...")
-time.sleep(.001)
-utils.log("run", "Slept successfully!")
+#utils.log("run", "Attempting to sleep...")
+#time.sleep(.001)
+#utils.log("run", "Slept successfully!")
 
 
-print("run time: " + utils.getTime("run"))
-utils.dumpLogs()
+#print("run time: " + utils.getTime("run"))
+#utils.dumpLogs()
