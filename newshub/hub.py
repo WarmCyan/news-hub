@@ -1,5 +1,6 @@
 from newshub.utils import Utils
 from newshub.hn_scraper import HNScraper
+from newshub.filters import Filters
 
 class Hub:
 
@@ -22,3 +23,7 @@ class Hub:
     def getHNScraper(self):
         scraper = HNScraper(self.utils)
         return scraper
+
+    def getFilters(self):
+        filters = Filters(self.utils)
+        return filters

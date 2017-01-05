@@ -4,13 +4,15 @@ import time
 hub = nh.Hub("./test")
 scraper = hub.getHNScraper()
 
-#scraper.articleMode = "new"
-#scraper.numArticles = 10
-#scraper.scrape("test")
+scraper.articleMode = "new"
+scraper.numArticles = 10
+scraper.scrape("test")
 
-scraper.resume("test")
+#scraper.resume("test")
 
-
+filters = hub.getFilters()
+filters.loadScrapedDataset("test")
+filters.lowercase(["title"])
 
 
 
