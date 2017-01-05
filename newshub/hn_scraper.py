@@ -17,8 +17,9 @@ class HNScraper:
     articleData = []
     obtainedIDList = [] # ID's for which we've retrieved data (for resuming from later point)
 
-    stats = {"averageRetrievalTime":0.0} # can be gotten inside hub to show stuff
     retrievalTimes = []
+    averageRetrievalTime = None
+    totalTime = None
 
     def __init__(self, utils):
         self.utils = utils
@@ -33,12 +34,34 @@ class HNScraper:
             dataFile.close()
 
             # write the list of already obtained IDs
-            idlist = {"articleIDList":self.articleIDList, "obtainedIDList":self.obtainedIDList}
+            idlist = {"articleIDList":self.articleIDList, "obtainedIDList":self.obtainedIDList, "numArticles":self.numArticles}
             saveFile = open(self.utils.workFolder + "/data/" + self.runName + "_scrape_idlist.json", 'w')
             saveFile.write(json.dumps(idlist))
             saveFile.close()
         except Exception as e:
             self.log("ERROR - Failed to save dataset - " + str(e))
+
+    def loadDataset(self):
+        self.log("Attempting to load previous dataset to continue from...")
+        try:
+            # get the id lists
+            saveFile = open(self.utils.workFolder + "/data/" + self.runName + "_scrape_idlist.json", 'r')
+            idlist = json.loads(saveFile.read())
+            saveFile.close()
+            
+            self.articleIDList = idlist["articleIDList"]
+            self.obtainedIDList = idlist["obtainedIDList"]
+            self.numArticles = idlist["numArticles"]
+            
+            # get the dataset
+            dataFile = open(self.utils.workFolder + "/data/" + self.runName + "_scrape_temp.json", 'r')
+            self.articleData = json.loads(dataFile.read())
+            dataFile.close()
+            
+            self.log("Successfully read previous data files!")
+            
+        except Excetion as e:
+            self.log("ERROR - failed to load previous dataset - " + str(e))
 
     def obtainArticleIDList(self):
         self.log("Querying " + self.articleMode + " stories...")
@@ -64,12 +87,21 @@ class HNScraper:
         return average
 
     def fillStats(self):
-        self.stats["averageRetrievalTime"] = self.calculateAverageRetrievalTime()
+        self.averageRetrievalTime = self.utils.makeSaneFloat(self.calculateAverageRetrievalTime())
+        self.totalTime = self.utils.getTime("scrape")
+
+    def printStats(self):
+        self.log("Average article query time: " + self.averageRetrievalTime + " seconds")
+        self.log("Total scrape time: " + self.totalTime + " seconds")
 
     def retrieveArticleData(self):
         index = 0
         for articleID in self.articleIDList:
+            index += 1
+            
             # check if this article has already been obtained before
+            if articleID in self.obtainedIDList:
+                continue
 
             # query the Attempting for article data
             startTime = time.clock()
@@ -80,7 +112,6 @@ class HNScraper:
 
             # print out data on the article just retrieved
             latest = self.articleData[len(self.articleData) - 1]
-            index += 1
 
             #self.log("\"" + self.utils.printify(latest["title"]) + "\" - " + str(index) + "/" + str(self.numArticles))
             self.log("\tArticle obtained. - " + str(index) + "/" + str(self.numArticles))
@@ -90,19 +121,30 @@ class HNScraper:
     def scrape(self, runName):
         self.runName = runName
         self.utils.makeTimePoint("scrape")
-        self.log("Initializing Hacker News scraper...")
+        self.log("Starting Hacker News scraper...")
         self.log("")
         self.obtainArticleIDList()
         self.printArticleCount()
         self.trimArticles()
         self.retrieveArticleData()
+        self.saveDataset()
         self.fillStats()
         self.log("")
         self.log("Scrape complete.")
-        self.log("Average retrieval time: " + str(self.calculateAverageRetrievalTime()) + " seconds")
+        self.printStats()
 
     def resume(self, runName):
-        pass
+        self.runName = runName
+        self.utils.makeTimePoint("scrape")
+        self.log("Resuming previous Hacker News scraper run...")
+        self.log("")
+        self.loadDataset()
+        self.retrieveArticleData()
+        self.saveDataset()
+        self.fillStats()
+        self.log("")
+        self.log("Scrape complete.")
+        self.printStats()
 
     def log(self, msg):
         self.utils.log("scrape", "(" + self.utils.getTime("scrape") + ") :: " + self.utils.printify(msg))

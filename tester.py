@@ -3,9 +3,17 @@ import time
 
 hub = nh.Hub("./test")
 scraper = hub.getHNScraper()
-scraper.articleMode = "new"
-scraper.numArticles = 10
-scraper.scrape("test")
+
+#scraper.articleMode = "new"
+#scraper.numArticles = 10
+#scraper.scrape("test")
+
+scraper.resume("test")
+
+
+
+
+
 
 #from newshub import Hub
 #from newshub.utils import *

@@ -44,8 +44,12 @@ class Utils:
     def getTime(self, name):
         if name not in self.timePoints: return "-1"
         timespan = time.clock() - self.timePoints[name]
-        stringtime = "{0:.3f}".format(timespan)
+        #stringtime = "{0:.3f}".format(timespan)
+        stringtime = self.makeSaneFloat(timespan)
         return stringtime
+
+    def makeSaneFloat(self, num):
+        return "{0:.3f}".format(num)
 
     # remove any encoding issues for printing object out to console 
     def printify(self, obj):
