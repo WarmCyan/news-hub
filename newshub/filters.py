@@ -96,14 +96,15 @@ class Filters:
                         if word not in stopwords.words("english") and word != " " and word != "":
                             newWords.append(word)
                     
+                    row[col] = " ".join(newWords)
                     # turn into a string
-                    wordsString = ""
-                    for word in newWords:
-                        wordsString += word + " "
+                    #wordsString = ""
+                    #for word in newWords:
+                        #wordsString += word + " "
 
                     # reassign
                     #print(wordsString.strip()) # DEBUG
-                    row[col] = wordsString.strip() 
+                    #row[col] = wordsString.strip() 
 
         self.log("Stopword removal filter completed!")
 
