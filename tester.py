@@ -12,7 +12,13 @@ scraper.scrape("test")
 
 filters = hub.getFilters()
 filters.loadScrapedDataset("test")
-filters.lowercase(["title"])
+
+filters.copyCol("title", "title_cleaned")
+filters.lowercase(["title_cleaned"])
+filters.replaceNonLetters(["title_cleaned"])
+filters.removeStopwords(["title_cleaned"])
+filters.saveWorkingDataset()
+#print(hub.utils.printify(filters.workingData))
 
 
 
