@@ -8,7 +8,7 @@ scraper.articleMode = "new"
 scraper.numArticles = 10
 scraper.scrape("test")
 
-#scraper.resume("test")
+##scraper.resume("test")
 
 filters = hub.getFilters()
 filters.loadScrapedDataset("test")
@@ -18,8 +18,11 @@ filters.lowercase(["title_cleaned"])
 filters.replaceNonLetters(["title_cleaned"])
 filters.removeStopwords(["title_cleaned"])
 filters.saveWorkingDataset()
-#print(hub.utils.printify(filters.workingData))
+##print(hub.utils.printify(filters.workingData))
 
+classifier = hub.getManualClassifier()
+classifier.startClassification("test", ["title", "title_cleaned"])
+#classifier.resumeClassification("test")
 
 
 

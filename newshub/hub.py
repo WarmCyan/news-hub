@@ -1,6 +1,7 @@
 from newshub.utils import Utils
 from newshub.hn_scraper import HNScraper
 from newshub.filters import Filters
+from newshub.manual_classifier import ManualClassifier
 
 class Hub:
 
@@ -27,3 +28,7 @@ class Hub:
     def getFilters(self):
         filters = Filters(self.utils)
         return filters
+
+    def getManualClassifier(self):
+        classifier = ManualClassifier(self.utils)
+        return classifier
