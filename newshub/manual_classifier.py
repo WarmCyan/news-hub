@@ -86,7 +86,10 @@ class ManualClassifier:
 
     def classify(self):
         self.log("Classifying...")
+
+        index = 0
         for row in self.workingData:
+            index += 1
 
             # skip row if done already
             try:
@@ -95,7 +98,9 @@ class ManualClassifier:
             except:
                 pass
             
-            print("\nPrevious tags: " + str(self.usedTags))
+            
+            print("\n" + str(index) + "/" + str(len(self.workingData)))
+            print("Previous tags: " + str(self.usedTags))
             #print(self.utils.printify(promptString))
             
             #promptString = ""

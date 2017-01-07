@@ -6,12 +6,11 @@ from newshub.manual_classifier import ManualClassifier
 class Hub:
 
     utils = None
-
-    # store a run name here, or have a "makerun" function
+    runName = ""
     
     def __init__(self, workFolder):
         print("----------------------------------------")
-        self.utils = Utils(workFolder)
+        self.utils = Utils(self, workFolder)
         self.utils.makeTimePoint("hub")
         self.utils.log("hub", "Initializing hub...")
         
@@ -20,6 +19,10 @@ class Hub:
             self.utils.dumpLogs()
         except: print("@ WARNING! - deconstructor failed.")
         print("========================================")
+
+    def setRunName(self, runName):
+        self.utils.log("hub", "Set run name to \"" + self.runName + "\"")
+        self.runName = runName
 
     def getHNScraper(self):
         scraper = HNScraper(self.utils)
