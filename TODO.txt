@@ -1,0 +1,3 @@
+- remove ridiculous amounts of repeated code. 
+  - RunName can be stored in hub, utils can be in charge of loading/saving data
+	with certain suffixes etc.
