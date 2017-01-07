@@ -21,8 +21,8 @@ class Hub:
         print("========================================")
 
     def setRunName(self, runName):
-        self.utils.log("hub", "Set run name to \"" + self.runName + "\"")
         self.runName = runName
+        self.utils.log("hub", "Set run name to \"" + self.runName + "\"")
 
     def getHNScraper(self):
         scraper = HNScraper(self.utils)
@@ -30,6 +30,7 @@ class Hub:
 
     def getFilters(self):
         filters = Filters(self.utils)
+        filters.loadDataset()
         return filters
 
     def getManualClassifier(self):

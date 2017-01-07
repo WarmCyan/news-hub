@@ -2,26 +2,26 @@ import newshub as nh
 import time
 
 hub = nh.Hub("./test")
+hub.setRunName("test")
 scraper = hub.getHNScraper()
 
 scraper.articleMode = "new"
 scraper.numArticles = 10
-scraper.scrape("test")
+scraper.scrape()
+#scraper.resume()
 
-##scraper.resume("test")
 
 filters = hub.getFilters()
-filters.loadScrapedDataset("test")
 
 filters.copyCol("title", "title_cleaned")
 filters.lowercase(["title_cleaned"])
 filters.replaceNonLetters(["title_cleaned"])
 filters.removeStopwords(["title_cleaned"])
-filters.saveWorkingDataset()
+filters.saveDataset()
 ##print(hub.utils.printify(filters.workingData))
 
 classifier = hub.getManualClassifier()
-classifier.startClassification("test", ["title", "title_cleaned"])
+classifier.startClassification(["title", "title_cleaned"])
 #classifier.resumeClassification("test")
 
 

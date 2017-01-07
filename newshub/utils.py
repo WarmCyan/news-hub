@@ -92,7 +92,7 @@ class Utils:
         self.log("utils", "Attempting to save helper data \"" + fileName + "\"...")
         
         try:
-            dataFile = open(fileName), 'w')
+            dataFile = open(fileName, 'w')
             dataFile.write(json.dumps(data))
             dataFile.close()
         except Exception as e: self.handleError("Failed to save helper data.", e)

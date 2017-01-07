@@ -8,50 +8,20 @@ class Filters:
     
     utils = None
 
-    runName = ""
-
     originalData = None
     workingData = None
     
-    #def __init__(self, utils, runName):
     def __init__(self, utils):
-        #self.runName = runName
         self.utils = utils
         self.utils.makeTimePoint("filters")
         self.log("Initializing filters...") 
 
-        #self.loadScrapedDataset()
-        #self.workingData = self.originalData.copy()
-        #self.log(self.workingData)
+    def loadDataset(self):
+        self.originalData = self.utils.loadDataset("scrape")
+        self.workingData = self.originalData.copy()
 
-    def loadScrapedDataset(self, runName):
-        self.log("Attempting to load scraped dataset...")
-        self.runName = runName
-
-        try:
-            dataFile = open(self.utils.workFolder + "/data/" + self.runName + "_scrape.json", 'r')
-            self.originalData = json.loads(dataFile.read())
-            dataFile.close()
-
-            self.log("Successfully loaded dataset!")
-            
-            self.workingData = self.originalData.copy()
-            # self.log(self.workingData) # DEBUG
-            
-        except Exception as e:
-            self.log("ERROR - failed to load dataset - " + str(e))
-
-    def saveWorkingDataset(self):
-        try:
-            dataFile = open(self.utils.workFolder + "/data/" + self.runName + "_cleaned.json", 'w')
-            dataFile.write(json.dumps(self.workingData))
-            dataFile.close()
-
-        except Exception as e:
-            self.log("ERROR - Failed to save dataset - " + str(e))
-
-    #def checkStopwords(self):
-        #try:
+    def saveDataset(self):
+        self.utils.saveDataset("cleaned", self.workingData)
 
     def copyCol(self, colName, newColName):
         self.log("")
@@ -97,14 +67,6 @@ class Filters:
                             newWords.append(word)
                     
                     row[col] = " ".join(newWords)
-                    # turn into a string
-                    #wordsString = ""
-                    #for word in newWords:
-                        #wordsString += word + " "
-
-                    # reassign
-                    #print(wordsString.strip()) # DEBUG
-                    #row[col] = wordsString.strip() 
 
         self.log("Stopword removal filter completed!")
 

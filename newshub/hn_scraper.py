@@ -8,7 +8,6 @@ from newshub.utils import Utils
 class HNScraper:
 
     utils = None
-    runName = ""
 
     numArticles = -1 # use -1 to represent getting as many as it can
     articleMode = "top" # set to 'new' to get newest instead   
@@ -25,44 +24,20 @@ class HNScraper:
         self.utils = utils
 
     def saveDataset(self, temp=False):
-        try:
-            # write the article data
-            dataFile = None
-            if temp: dataFile = open(self.utils.workFolder + "/data/" + self.runName + "_scrape_temp.json", 'w')
-            else: dataFile = open(self.utils.workFolder + "/data/" + self.runName + "_scrape.json", 'w')
-            dataFile.write(json.dumps(self.articleData))
-            dataFile.close()
+        if not temp: 
+            self.utils.saveDataset("scrape", self.articleData)
+            self.utils.saveExtraData("scrape", self.obtainedIDList)
+        else:
+            #saveData = {"articleData":self.articleData, "articleIDList":self.articleIDList, "obtainedIDList":self.obtainedIDList, "numArticles":self.numArticles}
+            self.utils.saveSession("scrape", False, articleData=self.articleData, articleIDList=self.articleIDList, obtainedIDList=self.obtainedIDList,numArticles=self.numArticles)
 
-            # write the list of already obtained IDs
-            idlist = {"articleIDList":self.articleIDList, "obtainedIDList":self.obtainedIDList, "numArticles":self.numArticles}
-            saveFile = open(self.utils.workFolder + "/data/" + self.runName + "_scrape_idlist.json", 'w')
-            saveFile.write(json.dumps(idlist))
-            saveFile.close()
-        except Exception as e:
-            self.log("ERROR - Failed to save dataset - " + str(e))
-
-    def loadDataset(self):
-        self.log("Attempting to load previous dataset to continue from...")
-        try:
-            # get the id lists
-            saveFile = open(self.utils.workFolder + "/data/" + self.runName + "_scrape_idlist.json", 'r')
-            idlist = json.loads(saveFile.read())
-            saveFile.close()
-            
-            self.articleIDList = idlist["articleIDList"]
-            self.obtainedIDList = idlist["obtainedIDList"]
-            self.numArticles = idlist["numArticles"]
-            
-            # get the dataset
-            dataFile = open(self.utils.workFolder + "/data/" + self.runName + "_scrape_temp.json", 'r')
-            self.articleData = json.loads(dataFile.read())
-            dataFile.close()
-            
-            self.log("Successfully read previous data files!")
-            
-        except Excetion as e:
-            self.log("ERROR - failed to load previous dataset - " + str(e))
-
+    def loadSession(self):
+        sessionData = self.utils.loadSession("scrape")
+        self.articleData = sessionData["articleData"]
+        self.articleIDList = sessionData["articleIDList"]
+        self.obtainedIDList = sessionData["obtainedIDList"]
+        self.numArticles = sessionData["numArticles"]
+        
     def obtainArticleIDList(self):
         self.log("Querying " + self.articleMode + " stories...")
         page = requests.get("https://hacker-news.firebaseio.com/v0/" + self.articleMode + "stories.json")
@@ -118,8 +93,7 @@ class HNScraper:
             self.obtainedIDList.append(articleID)
             self.saveDataset(True)
 
-    def scrape(self, runName):
-        self.runName = runName
+    def scrape(self):
         self.utils.makeTimePoint("scrape")
         self.log("Starting Hacker News scraper...")
         self.log("")
@@ -133,12 +107,11 @@ class HNScraper:
         self.log("Scrape complete.")
         self.printStats()
 
-    def resume(self, runName):
-        self.runName = runName
+    def resume(self):
         self.utils.makeTimePoint("scrape")
         self.log("Resuming previous Hacker News scraper run...")
         self.log("")
-        self.loadDataset()
+        self.loadSession() 
         self.retrieveArticleData()
         self.saveDataset()
         self.fillStats()
