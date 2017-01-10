@@ -23,10 +23,10 @@ class HNScraper:
     def __init__(self, utils):
         self.utils = utils
 
-    def saveDataset(self, temp=False):
+    def saveDataset(self, suffix, temp=False):
         if not temp: 
-            self.utils.saveDataset("scrape", self.articleData)
-            self.utils.saveExtraData("scrape", self.obtainedIDList)
+            self.utils.saveDataset(suffix, self.articleData)
+            self.utils.saveExtraData(suffix, self.obtainedIDList)
         else:
             #saveData = {"articleData":self.articleData, "articleIDList":self.articleIDList, "obtainedIDList":self.obtainedIDList, "numArticles":self.numArticles}
             self.utils.saveSession("scrape", False, articleData=self.articleData, articleIDList=self.articleIDList, obtainedIDList=self.obtainedIDList,numArticles=self.numArticles)
@@ -91,7 +91,7 @@ class HNScraper:
             #self.log("\"" + self.utils.printify(latest["title"]) + "\" - " + str(index) + "/" + str(self.numArticles))
             self.log("\tArticle obtained. - " + str(index) + "/" + str(self.numArticles))
             self.obtainedIDList.append(articleID)
-            self.saveDataset(True)
+            self.saveDataset("scrape", True)
 
     def scrape(self):
         self.utils.makeTimePoint("scrape")
@@ -101,7 +101,7 @@ class HNScraper:
         self.printArticleCount()
         self.trimArticles()
         self.retrieveArticleData()
-        self.saveDataset()
+        #self.saveDataset()
         self.fillStats()
         self.log("")
         self.log("Scrape complete.")
@@ -113,7 +113,7 @@ class HNScraper:
         self.log("")
         self.loadSession() 
         self.retrieveArticleData()
-        self.saveDataset()
+        #self.saveDataset()
         self.fillStats()
         self.log("")
         self.log("Scrape complete.")

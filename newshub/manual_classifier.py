@@ -15,7 +15,7 @@ class ManualClassifier:
         self.utils = utils
         self.log("Setting up manual classifier...") 
     
-    def loadDataset(self):
+    def loadDataset(self, suffix):
         self.originalData = self.utils.loadDataset("cleaned")
         self.workingData = self.originalData.copy()
 
@@ -26,10 +26,10 @@ class ManualClassifier:
         self.usedTags = sessionData["usedTags"]
         self.displayCols = sessionData["displayCols"]
 
-    def saveDataset(self, temp=False):
+    def saveDataset(self, suffix, temp=False):
         if not temp:
-            self.utils.saveDataset("classified", self.workingData)
-            self.utils.saveExtraData("classified", self.usedTags)
+            self.utils.saveDataset(suffix, self.workingData)
+            self.utils.saveExtraData(suffix, self.usedTags)
         else:
             self.utils.saveSession("classified", False, workingData=self.workingData, originalData=self.originalData, usedTags=self.usedTags, displayCols=self.displayCols)
 
@@ -43,7 +43,7 @@ class ManualClassifier:
     def startClassification(self, displayCols):
         self.displayCols = displayCols
         self.log("Starting classification session...")
-        self.loadDataset()
+        #self.loadDataset()
         self.classify()
 
     def classify(self):
@@ -86,8 +86,8 @@ class ManualClassifier:
             self.usedTags.sort()
             
             row["classification"] = tags
-            self.saveDataset(True)
-        self.saveDataset()
+            self.saveDataset("classified", True)
+        #self.saveDataset()
 
     def log(self, msg):
         self.utils.log("classifier", self.utils.printify(msg))
