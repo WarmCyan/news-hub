@@ -16,12 +16,12 @@ class Filters:
         self.utils.makeTimePoint("filters")
         self.log("Initializing filters...") 
 
-    def loadDataset(self):
-        self.originalData = self.utils.loadDataset("scrape")
+    def loadDataset(self, suffix):
+        self.originalData = self.utils.loadDataset(suffix)
         self.workingData = self.originalData.copy()
 
-    def saveDataset(self):
-        self.utils.saveDataset("cleaned", self.workingData)
+    def saveDataset(self, suffix):
+        self.utils.saveDataset("suffix", self.workingData)
 
     def copyCol(self, colName, newColName):
         self.log("")

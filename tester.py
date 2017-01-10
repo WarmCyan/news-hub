@@ -12,12 +12,13 @@ scraper.scrape()
 
 
 filters = hub.getFilters()
+filters.loadDataset("scrape")
 
 filters.copyCol("title", "title_cleaned")
 filters.lowercase(["title_cleaned"])
 filters.replaceNonLetters(["title_cleaned"])
 filters.removeStopwords(["title_cleaned"])
-filters.saveDataset()
+filters.saveDataset("cleaned")
 ##print(hub.utils.printify(filters.workingData))
 
 classifier = hub.getManualClassifier()

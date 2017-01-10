@@ -30,7 +30,7 @@ class Hub:
 
     def getFilters(self):
         filters = Filters(self.utils)
-        filters.loadDataset()
+        #filters.loadDataset()
         return filters
 
     def getManualClassifier(self):
