@@ -21,7 +21,7 @@ class Filters:
         self.workingData = self.originalData.copy()
 
     def saveDataset(self, suffix):
-        self.utils.saveDataset("suffix", self.workingData)
+        self.utils.saveDataset(suffix, self.workingData)
 
     def copyCol(self, colName, newColName):
         self.log("")

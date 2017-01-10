@@ -1,16 +1,15 @@
 import newshub as nh
 import time
 
-hub = nh.Hub("./test")
-hub.setRunName("test")
-scraper = hub.getHNScraper()
+hub = nh.Hub("./space")
+hub.setRunName("first")
 
-scraper.articleMode = "new"
-scraper.numArticles = 10
-scraper.scrape()
-scraper.saveDataset("scrape")
+#scraper = hub.getHNScraper()
+#scraper.articleMode = "new"
+#scraper.numArticles = 10
+#scraper.scrape()
+#scraper.saveDataset("scrape")
 #scraper.resume()
-
 
 filters = hub.getFilters()
 filters.loadDataset("scrape")
