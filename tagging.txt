@@ -1,0 +1,49 @@
+company names:
+spacex
+microsoft
+apple
+google
+deepmind
+darpa
+nasa
+facebook
+
+tensorflow
+
+
+
+technology
+	ai
+	computer science (cs theoretical stuff)
+	cybersecurity
+	datascience
+	iot
+
+science
+physics
+
+healthcare
+
+philosophy
+
+
+
+politics
+economy
+
+self improvement
+
+
+
+
+3 - computer science
+10,11 - technology
+21 - cybersecurity
+32 - cybersecurity
+38 - computer science
+304 - cybersecurity,politics
+367 - ai
+381 - technology
+437 - computer science
+459 - science
+

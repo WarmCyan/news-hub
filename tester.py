@@ -11,20 +11,19 @@ hub.setRunName("first")
 #scraper.saveDataset("scrape")
 #scraper.resume()
 
-filters = hub.getFilters()
-filters.loadDataset("scrape")
-filters.copyCol("title", "title_cleaned")
-filters.lowercase(["title_cleaned"])
-filters.replaceNonLetters(["title_cleaned"])
-filters.removeStopwords(["title_cleaned"])
-filters.saveDataset("cleaned")
+#filters = hub.getFilters()
+#filters.loadDataset("scrape")
+#filters.copyCol("title", "title_cleaned")
+#filters.lowercase(["title_cleaned"])
+#filters.replaceNonLetters(["title_cleaned"])
+#filters.removeStopwords(["title_cleaned"])
+#filters.saveDataset("cleaned")
 
 classifier = hub.getManualClassifier()
-classifier.loadDataset("cleaned")
-classifier.startClassification(["title", "title_cleaned"])
+#classifier.loadDataset("cleaned")
+#classifier.startClassification(["title", "title_cleaned"])
+classifier.resumeClassification()
 classifier.saveDataset("classified")
-#classifier.resumeClassification("test")
-
 
 
 #from newshub import Hub
