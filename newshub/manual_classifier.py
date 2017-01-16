@@ -16,7 +16,7 @@ class ManualClassifier:
         self.log("Setting up manual classifier...") 
     
     def loadDataset(self, suffix):
-        self.originalData = self.utils.loadDataset("cleaned")
+        self.originalData = self.utils.loadDataset(suffix)
         self.workingData = self.originalData.copy()
 
     def loadSession(self):

@@ -36,3 +36,7 @@ class Hub:
     def getManualClassifier(self):
         classifier = ManualClassifier(self.utils)
         return classifier
+
+    def getLSTMClassifier(self):
+        classifier = LSTMClassifier(self.utils)
+        return classifier
